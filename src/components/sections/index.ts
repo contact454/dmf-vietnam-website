@@ -1,0 +1,10 @@
+export { HeroSection } from "./hero";
+export { ServicesSection } from "./services";
+export { StatsSection } from "./stats";
+export { FeaturesSection } from "./features";
+export { HowItWorksSection } from "./how-it-works";
+export { CoursesSection } from "./courses";
+export { TestimonialsSection } from "./testimonials";
+export { PartnersSection } from "./partners";
+export { BlogPreviewSection } from "./blog-preview";
+export { CTASection } from "./cta";
