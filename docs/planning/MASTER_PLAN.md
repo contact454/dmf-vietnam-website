@@ -1,7 +1,7 @@
 # MASTER PLAN - DMF VIETNAM WEBSITE
 
-> **Phiên bản**: 2.0
-> **Cập nhật**: 2026-02-03
+> **Phiên bản**: 2.1
+> **Cập nhật**: 2026-02-20
 > **Tham chiếu**: ApplyBoard.com UI/UX Analysis
 
 ---
@@ -15,11 +15,11 @@ Xây dựng website DMF Vietnam theo chuẩn quốc tế, lấy cảm hứng t�
 
 | Metrics | Giá trị |
 |---------|---------|
-| **Tiến độ** | ~35% hoàn thành |
-| **Phase hiện tại** | Phase 3 - Development Pages |
-| **Homepage** | 5/11 sections hoàn thành |
-| **Pages** | 1/18 pages hoàn thành |
-| **Components** | 22/35 components hoàn thành |
+| **Tiến độ** | ~82% hoàn thành |
+| **Phase hiện tại** | Phase 5 - QA/Polish |
+| **Homepage** | 11/11 sections hoàn thành |
+| **Pages** | 24/26 pages hoàn thành |
+| **Components** | 31/35 components hoàn thành |
 
 ---
 
@@ -145,33 +145,40 @@ shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
 ### 3.1 Cấu trúc Trang
 
 ```
-/                           ─── Trang chủ ✅ (partial)
+/                           ─── Trang chủ ✅
 │
-├── /khoa-hoc-tieng-duc     ─── Khóa học tiếng Đức (Overview) ⬜
-│   ├── /a1                 ─── Khóa A1 ⬜
-│   ├── /a2                 ─── Khóa A2 ⬜
-│   ├── /b1                 ─── Khóa B1 ⬜
-│   └── /b2                 ─── Khóa B2 ⬜
+├── /khoa-hoc-tieng-duc     ─── Khóa học tiếng Đức (Overview) ✅
+│   ├── /a1                 ─── Khóa A1 ✅
+│   ├── /a2                 ─── Khóa A2 ✅
+│   ├── /b1                 ─── Khóa B1 ✅
+│   └── /b2                 ─── Khóa B2 ✅
 │
-├── /du-hoc-duc             ─── Du học Đức (Overview) ⬜
-│   ├── /du-hoc-nghe        ─── Ausbildung ⬜
-│   ├── /du-hoc-dai-hoc     ─── Đại học ⬜
-│   └── /dieu-kien-chi-phi  ─── Điều kiện & Chi phí ⬜
+├── /du-hoc-duc             ─── Du học Đức (Overview) ✅
+│   ├── /du-hoc-nghe        ─── Ausbildung ✅
+│   ├── /du-hoc-dai-hoc     ─── Đại học ✅
+│   └── /dieu-kien-chi-phi  ─── Điều kiện & Chi phí ✅
 │
-├── /dinh-cu-duc            ─── Định cư Đức (Overview) ⬜
+├── /dinh-cu-duc            ─── Định cư Đức (Overview) ✅
 │   ├── /con-duong-dinh-cu  ─── Con đường định cư ⬜
 │   └── /thanh-lap-dn       ─── Thành lập doanh nghiệp ⬜
 │
-├── /ve-chung-toi           ─── Về chúng tôi ⬜
-│   ├── /doi-ngu            ─── Đội ngũ ⬜
-│   └── /thanh-tich         ─── Thành tích ⬜
+├── /ve-chung-toi           ─── Về chúng tôi ✅
+│   ├── /doi-ngu            ─── Đội ngũ ✅
+│   └── /thanh-tich         ─── Thành tích ✅
 │
-├── /tin-tuc                ─── Blog listing ⬜
-│   └── /[slug]             ─── Blog detail ⬜
+├── /tin-tuc                ─── Blog listing ✅
+│   └── /[slug]             ─── Blog detail ✅
 │
-└── /lien-he                ─── Liên hệ ⬜
+├── /lien-he                ─── Liên hệ ✅
+├── /tu-van-mien-phi        ─── Tư vấn miễn phí ✅
+├── /dat-lich-tu-van        ─── Đặt lịch tư vấn ✅
+├── /faq                    ─── Câu hỏi thường gặp ✅
+├── /thong-tin-huu-ich/faq ─── FAQ chi tiết ✅
+├── /thong-tin-huu-ich/cuoc-song-tai-duc ─── Life in Germany ✅
+├── /chinh-sach-bao-mat     ─── Privacy Policy ✅
+└── /dieu-khoan-su-dung     ─── Terms of Use ✅
 
-Tổng: 18 pages (1 partial, 17 chưa có)
+Tổng: 26 pages (24 đã có, 2 đang backlog)
 ```
 
 ### 3.2 Homepage Sections
@@ -183,11 +190,11 @@ Tổng: 18 pages (1 partial, 17 chưa có)
 | 3 | Services | 4 cards dịch vụ chính | ✅ Done |
 | 4 | Features/Why DMF | 6 USPs với icons | ✅ Done |
 | 5 | Courses Preview | Tabs A1-B2 | ✅ Done |
-| 6 | Stats Bar | Counter animation | ⬜ TODO |
-| 7 | How It Works | 4-5 bước process | ⬜ TODO |
-| 8 | Testimonials | Carousel học viên | ⬜ TODO |
-| 9 | Partners | Logo carousel | ⬜ TODO |
-| 10 | Blog Preview | 3 bài mới nhất | ⬜ TODO |
+| 6 | Stats Bar | Counter animation | ✅ Done |
+| 7 | How It Works | 4-5 bước process | ✅ Done |
+| 8 | Testimonials | Carousel học viên | ✅ Done |
+| 9 | Partners | Logo carousel | ✅ Done |
+| 10 | Blog Preview | 3 bài mới nhất | ✅ Done |
 | 11 | CTA Section | Đăng ký tư vấn | ✅ Done |
 | 12 | Footer | Multi-column links | ✅ Done |
 
@@ -213,7 +220,7 @@ Tổng: 18 pages (1 partial, 17 chưa có)
 | Skeleton | skeleton.tsx | ✅ |
 | Tabs | tabs.tsx | ✅ |
 | Textarea | textarea.tsx | ✅ |
-| Carousel | carousel.tsx | ⬜ TODO |
+| Carousel | carousel.tsx | ✅ |
 | Progress | progress.tsx | ⬜ TODO |
 | Toast | toast.tsx | ⬜ TODO |
 | Form | form.tsx | ⬜ TODO |
@@ -229,10 +236,10 @@ Tổng: 18 pages (1 partial, 17 chưa có)
 | CourseCard | Chi tiết khóa học | ⬜ TODO |
 | BlogCard | Preview bài viết | ⬜ TODO |
 | ProcessStep | Step trong How It Works | ⬜ TODO |
-| PartnerLogo | Logo với hover effect | ⬜ TODO |
+| PartnerLogo | Logo với hover effect | ✅ Done |
 | LanguageSwitcher | DE/VI toggle | ⬜ TODO |
 | ChatBot | AI Assistant FAB | ⬜ TODO |
-| ContactForm | Multi-step form | ⬜ TODO |
+| ContactForm | Multi-step form | ✅ Done |
 | CTABanner | Full-width CTA | ⬜ TODO |
 
 ---
@@ -627,8 +634,8 @@ src/
 │   │   │   └── lien-he/
 │   │   └── layout.tsx
 │   ├── api/
-│   │   ├── chat/                 # AI Bot API
-│   │   └── contact/              # Contact form API
+│   │   ├── chat/                 # AI Bot API (planned)
+│   │   └── forms/[formType]/     # Contact/Consult/Booking API ✅
 │   ├── layout.tsx                # Root layout
 │   ├── globals.css
 │   └── favicon.ico
@@ -641,11 +648,11 @@ src/
 │   │   ├── services.tsx
 │   │   ├── features.tsx
 │   │   ├── courses.tsx
-│   │   ├── stats.tsx             # TODO
-│   │   ├── how-it-works.tsx      # TODO
-│   │   ├── testimonials.tsx      # TODO
-│   │   ├── partners.tsx          # TODO
-│   │   ├── blog-preview.tsx      # TODO
+│   │   ├── stats.tsx
+│   │   ├── how-it-works.tsx
+│   │   ├── testimonials.tsx
+│   │   ├── partners.tsx
+│   │   ├── blog-preview.tsx
 │   │   └── cta.tsx
 │   ├── forms/                    # Contact, Registration
 │   ├── chat/                     # AI Assistant
@@ -653,8 +660,10 @@ src/
 │
 ├── lib/
 │   ├── utils.ts                  # cn() helper
-│   ├── i18n.ts                   # i18n config
-│   └── api.ts                    # API helpers
+│   ├── animations.ts             # motion variants
+│   ├── submit-form.ts            # client submit helper
+│   ├── forms.ts                  # server form validation + persistence
+│   └── blog.ts                   # centralized blog data
 │
 ├── hooks/                        # Custom hooks
 │   ├── use-counter.ts
@@ -675,33 +684,23 @@ src/
 
 ## PHẦN 11: IMMEDIATE NEXT STEPS
 
-### Priority 1: Hoàn thành Homepage
+### Priority 1: Production Hardening
 
-1. **Stats Bar Section** - Counter animation với Intersection Observer
-2. **How It Works Section** - 4-step process với timeline
-3. **Testimonials Section** - Carousel với shadcn/ui Carousel
-4. **Partners Section** - Logo grid/carousel
+1. **CRM Integration** - Cấu hình webhook thật cho form API và quy trình xử lý lead.
+2. **Observability** - Bổ sung logging + alert cho form submissions và lỗi runtime.
+3. **Quality Gate** - Duy trì CI lint/test/build cho toàn bộ PR.
 
-### Priority 2: Thu thập Content
+### Priority 2: Content Operations
 
-1. Liên hệ client để lấy:
-   - Số liệu thống kê chính xác
-   - Thông tin liên hệ
-   - Chi tiết khóa học
-   - Testimonials (text + ảnh)
-   - Logo đối tác
+1. Chuẩn hóa quy trình cập nhật blog trong `src/lib/blog.ts` hoặc chuyển sang CMS.
+2. Bổ sung ảnh thật cho blog/testimonials/partners thay cho placeholder.
+3. Kiểm duyệt nội dung pháp lý (privacy/terms) với đội ngũ vận hành.
 
-### Priority 3: Core Pages
+### Priority 3: Feature Backlog
 
-1. **Liên hệ** - Contact form + map
-2. **Khóa học Overview** - Grid các khóa A1-B2
-3. **Course Detail** - Template cho A1, A2, B1, B2
-
-### Priority 4: Features
-
-1. **i18n Setup** - next-intl với DE/VI
-2. **Contact Form** - Multi-step wizard
-3. **AI Bot** - DMF Assistant
+1. **i18n Setup** - next-intl với DE/VI.
+2. **AI Bot** - DMF Assistant.
+3. **Progress/Toast/Form primitives** - hoàn thiện UI checklist còn lại.
 
 ---
 
@@ -736,5 +735,5 @@ src/
 *Master Plan này được cập nhật dựa trên phân tích ApplyBoard và trạng thái hiện tại của dự án.*
 
 **Tạo bởi**: Claude Code
-**Ngày**: 2026-02-03
-**Version**: 2.0
+**Ngày**: 2026-02-20
+**Version**: 2.1

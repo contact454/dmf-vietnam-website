@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import Link from "next/link";
 import { Header, Footer } from "@/components/layout";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { submitForm } from "@/lib/submit-form";
 
 const contactInfo = [
   {
@@ -104,16 +104,24 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError(null);
+    try {
+      await submitForm("contact", formData);
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Không thể gửi form. Vui lòng thử lại."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -218,6 +226,7 @@ export default function ContactPage() {
                           inquiryType: "",
                           message: ""
                         });
+                        setSubmitError(null);
                       }}
                       variant="outline"
                     >
@@ -300,7 +309,7 @@ export default function ContactPage() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Nội dung tin nhắn
+                        Nội dung tin nhắn <span className="text-red-500">*</span>
                       </label>
                       <Textarea
                         name="message"
@@ -308,8 +317,15 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="Nhập nội dung bạn muốn tư vấn..."
                         rows={4}
+                        required
                       />
                     </div>
+
+                    {submitError && (
+                      <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {submitError}
+                      </div>
+                    )}
 
                     <Button
                       type="submit"

@@ -6,72 +6,14 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/shared/image-placeholder";
-
-interface BlogPost {
-  id: number;
-  slug: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  image: string;
-  date: string;
-  readTime: string;
-  featured?: boolean;
-}
-
-// Placeholder blog posts - replace with real data from CMS
-const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    slug: "ausbildung-la-gi-co-hoi-nghe-nghiep-tai-duc",
-    title: "Ausbildung là gì? Cơ hội nghề nghiệp tại Đức cho người Việt",
-    excerpt:
-      "Tìm hiểu chi tiết về chương trình đào tạo nghề Ausbildung tại Đức - cơ hội việc làm và định cư lý tưởng cho người Việt Nam.",
-    category: "Du học nghề",
-    image: "/images/blog/ausbildung-thumb.webp",
-    date: "2024-01-15",
-    readTime: "8 phút",
-    featured: true,
-  },
-  {
-    id: 2,
-    slug: "hoc-tieng-duc-tu-a1-den-b2-mat-bao-lau",
-    title: "Học tiếng Đức từ A1 đến B2 mất bao lâu? Lộ trình chi tiết",
-    excerpt:
-      "Bạn đang thắc mắc cần bao lâu để đạt trình độ B2? Bài viết này sẽ giúp bạn lên kế hoạch học tập hiệu quả.",
-    category: "Tiếng Đức",
-    image: "/images/blog/german-learning-thumb.webp",
-    date: "2024-01-10",
-    readTime: "6 phút",
-  },
-  {
-    id: 3,
-    slug: "chi-phi-du-hoc-duc-2024-cap-nhat-moi-nhat",
-    title: "Chi phí du học Đức 2024: Cập nhật mới nhất và đầy đủ nhất",
-    excerpt:
-      "Tổng hợp chi tiết các khoản chi phí du học Đức bao gồm học phí, sinh hoạt, bảo hiểm và visa.",
-    category: "Chi phí",
-    image: "/images/blog/study-cost-thumb.webp",
-    date: "2024-01-05",
-    readTime: "10 phút",
-  },
-];
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-}
+import { formatBlogDate, getAllBlogPosts } from "@/lib/blog";
 
 function BlogCard({
   post,
   index,
   featured = false,
 }: {
-  post: BlogPost;
+  post: ReturnType<typeof getAllBlogPosts>[number];
   index: number;
   featured?: boolean;
 }) {
@@ -123,7 +65,7 @@ function BlogCard({
             <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
               <span className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                {formatDate(post.date)}
+                {formatBlogDate(post.date)}
               </span>
               <span className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
@@ -167,8 +109,11 @@ export function BlogPreviewSection() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const featuredPost = blogPosts.find((p) => p.featured);
-  const regularPosts = blogPosts.filter((p) => !p.featured);
+  const allPosts = getAllBlogPosts().slice(0, 4);
+  const featuredPost = allPosts.find((post) => post.featured) ?? allPosts[0];
+  const regularPosts = allPosts
+    .filter((post) => post.slug !== featuredPost?.slug)
+    .slice(0, 3);
 
   return (
     <section ref={ref} className="section-padding bg-muted/30">

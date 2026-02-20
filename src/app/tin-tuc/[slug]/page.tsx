@@ -1,142 +1,61 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Header, Footer } from "@/components/layout";
+import { notFound } from "next/navigation";
+import { PageShell } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
   Calendar,
   Clock,
   User,
   ArrowLeft,
-  Share2,
   Facebook,
   Twitter,
   Linkedin,
   Copy,
   Tag,
-  ArrowRight,
   Newspaper
 } from "lucide-react";
+import {
+  formatBlogDate,
+  getBlogPostBySlug,
+  getRelatedBlogPosts,
+  getAllBlogPosts,
+} from "@/lib/blog";
 
-// This would normally come from a CMS or database
-const post = {
-  slug: "du-hoc-nghe-duc-2024-co-hoi-va-thach-thuc",
-  title: "Du học nghề Đức 2024: Cơ hội và thách thức cho học viên Việt Nam",
-  excerpt: "Tổng quan về thị trường du học nghề Đức năm 2024, những ngành nghề đang có nhu cầu cao và lời khuyên cho các bạn trẻ Việt Nam muốn theo đuổi con đường Ausbildung.",
-  category: "Du học Đức",
-  author: {
-    name: "DMF Vietnam",
-    role: "Ban biên tập"
-  },
-  date: "15/01/2024",
-  readTime: "8 phút đọc",
-  tags: ["Ausbildung", "Du học Đức", "Visa", "Nghề nghiệp"],
-  content: `
-## Tổng quan về Ausbildung tại Đức năm 2024
-
-Năm 2024 đánh dấu những thay đổi quan trọng trong chính sách du học nghề của Đức. Với việc thiếu hụt lao động ngày càng trầm trọng, Đức đang mở rộng cửa đón nhận nhiều học viên quốc tế hơn, đặc biệt là từ các nước châu Á như Việt Nam.
-
-### Những thay đổi chính sách mới
-
-Từ tháng 3/2024, Đức đã áp dụng Luật Nhập cư Lao động Chuyên môn mới (Fachkräfteeinwanderungsgesetz), tạo điều kiện thuận lợi hơn cho người lao động và học viên nước ngoài:
-
-- Giảm yêu cầu về trình độ tiếng Đức cho một số ngành nghề
-- Đơn giản hóa quy trình xin visa
-- Công nhận rộng rãi hơn các bằng cấp nước ngoài
-
-## Các ngành nghề có nhu cầu cao nhất
-
-### 1. Y tế và Điều dưỡng
-
-Đây là ngành có nhu cầu cao nhất tại Đức. Với dân số già hóa, Đức cần thêm hàng trăm nghìn nhân viên y tế trong thập kỷ tới.
-
-**Mức lương trung bình:** 1.000 - 1.300€/tháng trong thời gian học
-**Yêu cầu tiếng Đức:** B1-B2
-
-### 2. Khách sạn và Nhà hàng
-
-Ngành du lịch và khách sạn phục hồi mạnh sau đại dịch, tạo ra nhiều cơ hội cho học viên quốc tế.
-
-**Mức lương trung bình:** 900 - 1.100€/tháng
-**Yêu cầu tiếng Đức:** B1
-
-### 3. Kỹ thuật và Cơ khí
-
-Đức là cường quốc công nghiệp, luôn cần nhân lực trong lĩnh vực kỹ thuật.
-
-**Mức lương trung bình:** 900 - 1.200€/tháng
-**Yêu cầu tiếng Đức:** B1
-
-## Thách thức cho học viên Việt Nam
-
-### Rào cản ngôn ngữ
-
-Tiếng Đức không phải ngôn ngữ dễ học. Nhiều học viên gặp khó khăn trong việc đạt trình độ B1 trong thời gian ngắn.
-
-**Giải pháp:** Bắt đầu học tiếng Đức sớm, học với giáo viên bản ngữ, và tham gia các lớp speaking club thường xuyên.
-
-### Khác biệt văn hóa
-
-Môi trường làm việc và học tập tại Đức rất khác với Việt Nam. Tính đúng giờ, làm việc độc lập và giao tiếp trực tiếp là những điều cần thích nghi.
-
-### Chi phí ban đầu
-
-Mặc dù Ausbildung được trả lương, chi phí chuẩn bị trước khi đi vẫn là khoản đầu tư đáng kể.
-
-## Lời khuyên cho năm 2024
-
-1. **Bắt đầu sớm:** Quá trình từ học tiếng đến sang Đức mất 12-18 tháng. Hãy bắt đầu ngay!
-
-2. **Chọn ngành phù hợp:** Không chỉ dựa vào lương, hãy chọn ngành bạn có đam mê và phù hợp với khả năng.
-
-3. **Chuẩn bị tài chính:** Dự trù 80-150 triệu VNĐ cho toàn bộ quá trình.
-
-4. **Học tiếng Đức nghiêm túc:** Đây là yếu tố quyết định thành công của bạn tại Đức.
-
-5. **Tìm đơn vị tư vấn uy tín:** Một đơn vị tư vấn tốt sẽ giúp bạn tiết kiệm thời gian và tránh các rủi ro.
-
-## Kết luận
-
-Năm 2024 là thời điểm tuyệt vời để bắt đầu hành trình Ausbildung tại Đức. Với sự chuẩn bị kỹ lưỡng và đối tác đồng hành đáng tin cậy, ước mơ du học và định cư Đức hoàn toàn trong tầm tay của bạn.
-
----
-
-*Bạn muốn được tư vấn chi tiết về chương trình Ausbildung? Liên hệ DMF Vietnam ngay hôm nay để được hỗ trợ miễn phí!*
-  `
+type BlogPostPageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
 };
 
-const relatedPosts = [
-  {
-    slug: "top-10-nganh-ausbildung-luong-cao-nhat",
-    title: "Top 10 ngành Ausbildung có lương cao nhất tại Đức",
-    category: "Du học Đức",
-    date: "10/01/2024"
-  },
-  {
-    slug: "kinh-nghiem-xin-visa-du-hoc-duc-2024",
-    title: "Kinh nghiệm xin visa du học Đức 2024 thành công",
-    category: "Kinh nghiệm",
-    date: "08/01/2024"
-  },
-  {
-    slug: "so-sanh-ausbildung-va-du-hoc-dai-hoc-duc",
-    title: "So sánh Ausbildung và Du học đại học Đức",
-    category: "Du học Đức",
-    date: "05/01/2024"
-  }
-];
+export async function generateStaticParams() {
+  return getAllBlogPosts().map((post) => ({ slug: post.slug }));
+}
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
+  if (!post) {
+    return {
+      title: "Không tìm thấy bài viết | DMF Vietnam",
+    };
+  }
   return {
     title: `${post.title} | DMF Vietnam`,
     description: post.excerpt
   };
 }
 
-export default function BlogPostPage() {
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
+  if (!post) notFound();
+  const relatedPosts = getRelatedBlogPosts(post.slug, post.category, 3);
+
   return (
-    <>
-      <Header />
-      <main>
+    <PageShell>
         {/* Hero Section */}
         <section className="relative pt-24 pb-12 lg:pt-32 lg:pb-16 bg-gradient-to-br from-primary/5 via-white to-secondary/5">
           <div className="container-dmf">
@@ -175,7 +94,7 @@ export default function BlogPostPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>{post.date}</span>
+                  <span>{formatBlogDate(post.date)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
@@ -303,7 +222,7 @@ export default function BlogPostPage() {
                         <h4 className="text-sm font-medium text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
                           {relatedPost.title}
                         </h4>
-                        <span className="text-xs text-gray-400">{relatedPost.date}</span>
+                        <span className="text-xs text-gray-400">{formatBlogDate(relatedPost.date)}</span>
                       </Link>
                     ))}
                   </div>
@@ -366,8 +285,6 @@ export default function BlogPostPage() {
             </div>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </PageShell>
   );
 }

@@ -8,7 +8,6 @@ import {
   GraduationCap,
   Award,
   Globe,
-  Linkedin,
   Mail
 } from "lucide-react";
 

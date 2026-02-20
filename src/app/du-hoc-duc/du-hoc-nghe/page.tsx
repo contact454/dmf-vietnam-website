@@ -4,17 +4,12 @@ import { Header, Footer } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
   Briefcase,
-  Clock,
   Euro,
-  CheckCircle2,
   ArrowRight,
   ArrowLeft,
-  Users,
   Award,
   Building2,
   GraduationCap,
-  Heart,
-  Utensils,
   Car,
   Wrench,
   Stethoscope,

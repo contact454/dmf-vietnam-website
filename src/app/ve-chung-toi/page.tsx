@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { Header, Footer } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -87,15 +86,6 @@ const milestones = [
   { year: "2020", event: "Đối tác tại Đức", description: "Thiết lập mạng lưới đối tác doanh nghiệp Đức" },
   { year: "2022", event: "1500 học viên", description: "Mở rộng quy mô, đào tạo cả online" },
   { year: "2024", event: "2000+ học viên", description: "Tiếp tục phát triển và mở rộng dịch vụ" }
-];
-
-const partners = [
-  "Goethe Institut",
-  "ÖSD",
-  "IHK",
-  "Các trường nghề tại Đức",
-  "Doanh nghiệp Đức",
-  "Đại sứ quán Đức"
 ];
 
 const whyChooseUs = [

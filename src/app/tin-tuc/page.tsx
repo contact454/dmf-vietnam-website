@@ -1,146 +1,37 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { Header, Footer } from "@/components/layout";
+import { PageShell } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
   Newspaper,
   Calendar,
   Clock,
-  ArrowRight,
-  Tag,
   Search,
   ChevronLeft,
   ChevronRight,
   User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  formatBlogDate,
+  getAllBlogPosts,
+  getBlogCategories,
+} from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Tin tức & Blog | DMF Vietnam",
   description: "Cập nhật tin tức du học Đức, kinh nghiệm học tiếng Đức, chia sẻ từ học viên thành công tại DMF Vietnam.",
 };
 
-const categories = [
-  { slug: "all", label: "Tất cả", count: 24 },
-  { slug: "du-hoc-duc", label: "Du học Đức", count: 8 },
-  { slug: "tieng-duc", label: "Học tiếng Đức", count: 6 },
-  { slug: "kinh-nghiem", label: "Kinh nghiệm", count: 5 },
-  { slug: "tin-tuc", label: "Tin tức", count: 3 },
-  { slug: "hoc-vien", label: "Học viên chia sẻ", count: 2 }
-];
-
-const featuredPost = {
-  slug: "du-hoc-nghe-duc-2024-co-hoi-va-thach-thuc",
-  title: "Du học nghề Đức 2024: Cơ hội và thách thức cho học viên Việt Nam",
-  excerpt: "Tổng quan về thị trường du học nghề Đức năm 2024, những ngành nghề đang có nhu cầu cao và lời khuyên cho các bạn trẻ Việt Nam muốn theo đuổi con đường Ausbildung.",
-  category: "Du học Đức",
-  author: "DMF Vietnam",
-  date: "15/01/2024",
-  readTime: "8 phút đọc",
-  image: null
-};
-
-const posts = [
-  {
-    slug: "hoc-tieng-duc-tu-a1-den-b1-mat-bao-lau",
-    title: "Học tiếng Đức từ A1 đến B1 mất bao lâu?",
-    excerpt: "Thời gian học tiếng Đức phụ thuộc vào nhiều yếu tố. Bài viết chia sẻ kinh nghiệm và lộ trình học hiệu quả.",
-    category: "Học tiếng Đức",
-    author: "Nguyễn Văn A",
-    date: "12/01/2024",
-    readTime: "5 phút đọc",
-    image: null
-  },
-  {
-    slug: "top-10-nganh-ausbildung-luong-cao-nhat",
-    title: "Top 10 ngành Ausbildung có lương cao nhất tại Đức",
-    excerpt: "Danh sách các ngành nghề Ausbildung có mức lương hấp dẫn và cơ hội việc làm cao sau khi tốt nghiệp.",
-    category: "Du học Đức",
-    author: "DMF Vietnam",
-    date: "10/01/2024",
-    readTime: "6 phút đọc",
-    image: null
-  },
-  {
-    slug: "kinh-nghiem-xin-visa-du-hoc-duc-2024",
-    title: "Kinh nghiệm xin visa du học Đức 2024 thành công",
-    excerpt: "Chia sẻ chi tiết quy trình xin visa du học Đức, các giấy tờ cần chuẩn bị và những lưu ý quan trọng.",
-    category: "Kinh nghiệm",
-    author: "Trần Thị B",
-    date: "08/01/2024",
-    readTime: "7 phút đọc",
-    image: null
-  },
-  {
-    slug: "so-sanh-ausbildung-va-du-hoc-dai-hoc-duc",
-    title: "So sánh Ausbildung và Du học đại học Đức: Nên chọn con đường nào?",
-    excerpt: "Phân tích ưu nhược điểm của hai con đường du học phổ biến nhất để giúp bạn đưa ra quyết định phù hợp.",
-    category: "Du học Đức",
-    author: "DMF Vietnam",
-    date: "05/01/2024",
-    readTime: "8 phút đọc",
-    image: null
-  },
-  {
-    slug: "5-sai-lam-khi-hoc-tieng-duc",
-    title: "5 sai lầm phổ biến khi học tiếng Đức và cách khắc phục",
-    excerpt: "Những lỗi thường gặp của người Việt khi học tiếng Đức và phương pháp để học hiệu quả hơn.",
-    category: "Học tiếng Đức",
-    author: "Lê Văn C",
-    date: "02/01/2024",
-    readTime: "5 phút đọc",
-    image: null
-  },
-  {
-    slug: "cuoc-song-hoc-vien-viet-nam-tai-duc",
-    title: "Cuộc sống của học viên Việt Nam tại Đức như thế nào?",
-    excerpt: "Chia sẻ từ các cựu học viên DMF về cuộc sống học tập và làm việc hàng ngày tại Đức.",
-    category: "Học viên chia sẻ",
-    author: "Phạm Thị D",
-    date: "28/12/2023",
-    readTime: "6 phút đọc",
-    image: null
-  },
-  {
-    slug: "chi-phi-sinh-hoat-tai-duc-2024",
-    title: "Chi phí sinh hoạt tại Đức 2024: Cần chuẩn bị bao nhiêu tiền?",
-    excerpt: "Tổng hợp chi phí nhà ở, ăn uống, đi lại và các khoản phí khác khi sống tại Đức.",
-    category: "Kinh nghiệm",
-    author: "DMF Vietnam",
-    date: "25/12/2023",
-    readTime: "7 phút đọc",
-    image: null
-  },
-  {
-    slug: "hoc-bong-du-hoc-duc-danh-cho-sinh-vien-viet-nam",
-    title: "Các học bổng du học Đức dành cho sinh viên Việt Nam",
-    excerpt: "Tổng hợp các chương trình học bổng từ chính phủ Đức và các tổ chức dành cho sinh viên Việt Nam.",
-    category: "Du học Đức",
-    author: "DMF Vietnam",
-    date: "20/12/2023",
-    readTime: "8 phút đọc",
-    image: null
-  },
-  {
-    slug: "lam-them-khi-du-hoc-duc-can-biet-gi",
-    title: "Làm thêm khi du học Đức: Những điều cần biết",
-    excerpt: "Quy định về làm thêm, các công việc phổ biến và kinh nghiệm cân bằng học tập - làm việc.",
-    category: "Kinh nghiệm",
-    author: "Hoàng Văn E",
-    date: "18/12/2023",
-    readTime: "6 phút đọc",
-    image: null
-  }
-];
-
 export default function BlogPage() {
+  const categories = getBlogCategories();
+  const allPosts = getAllBlogPosts();
+  const featuredPost = (allPosts.find((post) => post.featured) ?? allPosts[0])!;
+  const posts = allPosts.filter((post) => post.slug !== featuredPost?.slug);
   const activeCategory = "all";
 
   return (
-    <>
-      <Header />
-      <main>
+    <PageShell>
         {/* Hero Section */}
         <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-20 bg-gradient-to-br from-primary/5 via-white to-secondary/5">
           <div className="container-dmf">
@@ -231,11 +122,11 @@ export default function BlogPage() {
                   <div className="flex items-center gap-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <User className="h-4 w-4" />
-                      {featuredPost.author}
+                      {featuredPost.author.name}
                     </div>
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
-                      {featuredPost.date}
+                      {formatBlogDate(featuredPost.date)}
                     </div>
                     <div className="flex items-center gap-1">
                       <Clock className="h-4 w-4" />
@@ -252,9 +143,9 @@ export default function BlogPage() {
         <section className="py-12 lg:py-16">
           <div className="container-dmf">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {posts.map((post, index) => (
+              {posts.map((post) => (
                 <Link
-                  key={index}
+                  key={post.id}
                   href={`/tin-tuc/${post.slug}`}
                   className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
                 >
@@ -269,7 +160,7 @@ export default function BlogPage() {
                       <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded">
                         {post.category}
                       </span>
-                      <span className="text-xs text-gray-400">{post.date}</span>
+                      <span className="text-xs text-gray-400">{formatBlogDate(post.date)}</span>
                     </div>
 
                     <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
@@ -283,7 +174,7 @@ export default function BlogPage() {
                     <div className="flex items-center justify-between text-xs text-gray-500">
                       <div className="flex items-center gap-1">
                         <User className="h-3 w-3" />
-                        {post.author}
+                        {post.author.name}
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
@@ -346,8 +237,6 @@ export default function BlogPage() {
             </div>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </PageShell>
   );
 }

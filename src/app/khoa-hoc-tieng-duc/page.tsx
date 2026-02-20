@@ -1,13 +1,11 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { Header, Footer } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen,
   Clock,
   Users,
-  Award,
   CheckCircle2,
   ArrowRight,
   GraduationCap,

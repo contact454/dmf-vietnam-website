@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { Header, Footer } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,16 +8,13 @@ import {
   Building2,
   Users,
   CheckCircle2,
-  ArrowRight,
   Clock,
   FileText,
   Shield,
   Euro,
   Globe,
   Heart,
-  Award,
-  MapPin,
-  Calendar
+  Award
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

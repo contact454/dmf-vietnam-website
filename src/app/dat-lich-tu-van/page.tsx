@@ -21,6 +21,7 @@ import {
   Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { submitForm } from "@/lib/submit-form";
 
 const consultationModes = [
   {
@@ -123,15 +124,26 @@ export default function BookConsultationPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const dates = generateDates();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError(null);
+    try {
+      await submitForm("booking", formData);
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Không thể gửi lịch hẹn. Vui lòng thử lại."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -618,6 +630,12 @@ export default function BookConsultationPage() {
                         )}
                       </Button>
                     </div>
+
+                    {submitError && (
+                      <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {submitError}
+                      </div>
+                    )}
 
                     <p className="text-xs text-gray-500 text-center">
                       Bằng việc đặt lịch, bạn đồng ý với{" "}

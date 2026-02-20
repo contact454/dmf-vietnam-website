@@ -9,12 +9,10 @@ import {
   CheckCircle2,
   ArrowRight,
   ArrowLeft,
-  BookOpen,
   Award,
   Building2,
   Globe,
   Briefcase,
-  Users,
   FileText
 } from "lucide-react";
 

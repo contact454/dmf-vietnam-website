@@ -7,16 +7,9 @@ import {
   CheckCircle2,
   ArrowRight,
   ArrowLeft,
-  Euro,
   GraduationCap,
   Briefcase,
-  Clock,
-  AlertCircle,
-  BookOpen,
-  CreditCard,
-  Home,
-  Plane,
-  Shield
+  AlertCircle
 } from "lucide-react";
 
 export const metadata: Metadata = {

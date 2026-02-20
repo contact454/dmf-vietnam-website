@@ -27,6 +27,8 @@
 - **Smooth Animations** - Framer Motion scroll animations
 - **SEO Optimized** - Meta tags, Open Graph, structured data
 - **Fast Performance** - Static generation, optimized images
+- **Form API Ready** - 3 endpoints cho contact/tư vấn/đặt lịch
+- **CI Ready** - GitHub Actions chạy lint + test + build
 
 ## Pages
 
@@ -145,6 +147,16 @@ npm run dev      # Start development server
 npm run build    # Create production build
 npm run start    # Start production server
 npm run lint     # Run ESLint
+npm run test     # Run data/link integrity tests
+```
+
+## Environment Variables
+
+Copy from `.env.example` and configure if needed:
+
+```bash
+DMF_FORMS_WEBHOOK_URL=
+DMF_FORMS_STORAGE_PATH=/tmp/dmf-form-submissions.jsonl
 ```
 
 ## Documentation

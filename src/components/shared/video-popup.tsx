@@ -13,7 +13,6 @@ interface VideoPopupProps {
 
 export function VideoPopup({
   videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  thumbnailUrl,
   title = "Video testimonial",
 }: VideoPopupProps) {
   const [isOpen, setIsOpen] = useState(false);

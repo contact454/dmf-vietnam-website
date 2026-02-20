@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  MessageCircle,
   CheckCircle2,
   Send,
   GraduationCap,
@@ -22,6 +21,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { submitForm } from "@/lib/submit-form";
 
 const consultationTypes = [
   {
@@ -88,13 +88,24 @@ export default function FreeConsultationPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError(null);
+    try {
+      await submitForm("free-consultation", formData);
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Không thể gửi form. Vui lòng thử lại."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -173,6 +184,7 @@ export default function FreeConsultationPage() {
                             timeline: "",
                             message: ""
                           });
+                          setSubmitError(null);
                         }}
                         variant="outline"
                       >
@@ -370,6 +382,12 @@ export default function FreeConsultationPage() {
                         />
                       </div>
 
+                      {submitError && (
+                        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                          {submitError}
+                        </div>
+                      )}
+
                       {/* Submit */}
                       <Button
                         type="submit"
@@ -445,8 +463,8 @@ export default function FreeConsultationPage() {
                     ))}
                   </div>
                   <p className="text-gray-600 text-sm mb-4 italic">
-                    "Được tư vấn rất chi tiết và chuyên nghiệp. Nhờ DMF mà mình
-                    đã chọn được con đường phù hợp và giờ đã sang Đức học Ausbildung."
+                    &quot;Được tư vấn rất chi tiết và chuyên nghiệp. Nhờ DMF mà mình
+                    đã chọn được con đường phù hợp và giờ đã sang Đức học Ausbildung.&quot;
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">

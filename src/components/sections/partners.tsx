@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import { Building2, GraduationCap, Award, Handshake } from "lucide-react";
 import {
   ImagePlaceholder,
@@ -52,21 +53,14 @@ const categories = [
   },
 ];
 
-function PartnerLogo({ partner, index }: { partner: Partner; index: number }) {
-  const getCategoryIcon = () => {
-    switch (partner.category) {
-      case "university":
-        return GraduationCap;
-      case "company":
-        return Building2;
-      case "institution":
-        return Award;
-      default:
-        return Handshake;
-    }
-  };
+const partnerCategoryIcons: Record<Partner["category"], LucideIcon> = {
+  university: GraduationCap,
+  company: Building2,
+  institution: Award,
+};
 
-  const Icon = getCategoryIcon();
+function PartnerLogo({ partner, index }: { partner: Partner; index: number }) {
+  const Icon = partnerCategoryIcons[partner.category] ?? Handshake;
 
   return (
     <motion.div
